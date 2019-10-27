@@ -34,7 +34,7 @@
               <option value="books">Books</option>
               <option value="business">Business</option>
               <option value="culture">Culture</option>
-              <option value="Sport">Sport</option>
+              <option value="sport">Sport</option>
             </select>
           </div>
         </div>
@@ -42,10 +42,7 @@
           <div class="column column-20">
             <label for="activePageSelect">Active Page</label>
             <select id="activePageSelect">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
+              <!-- <option value="1">1</option> -->
             </select>
           </div>
         </div>
@@ -59,19 +56,19 @@
             <h2 class="newsColumnTitle">News List</h2>
 
             <ul class="newsList">
-              <li>
+              <li class="singleNews">
                 <article class="news">
                   <header>
-                    <h3>Sample news title</h3>
+                    <h3 class="newsTitle">Sample news title</h3>
                   </header>
                   <section class="newsDetails">
                     <ul>
-                      <li><strong>Section Name:</strong> Sample Section</li>
-                      <li><strong>Publication Date:</strong> 06.12.2018</li>
+                      <li><strong>Section Name:</strong> <span class="newsSectionName">Section</span></li>
+                      <li><strong>Publication Date:</strong> <span class="newsPublicationDate">06.12.2018</span></li>
                     </ul>
                   </section>
                   <section class="newsActions">
-                    <a href="https://theguardian.com" class="button">Full article</a>
+                    <a href="https://theguardian.com" class="newsLink button">Full article</a>
                     <button class="button button-outline">Read Later</button>
                   </section>
                 </article>
