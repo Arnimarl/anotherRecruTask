@@ -12,12 +12,22 @@ const mainNewsModule = (function() {
   const sectionSelectEl = document.getElementById("sectionSelect");
   const searchPhraseFormEl = document.getElementById("newsContentSearchForm");
   const searchPhraseInputEl = document.getElementById("newsContentSearch");
+  const searchNoOlderThanNumOfDays = 30;
+
+  function getStartSearchDate() {
+    // start searching for articles not older than {searchNoOlderThanNumOfDays} days
+    let startDate = new Date();
+    startDate.setDate(startDate.getDate()-searchNoOlderThanNumOfDays);
+
+    return `${startDate.getFullYear()}-${startDate.getMonth()+1}-${startDate.getDate()}`;
+  }
 
   function getNews(params) {
     let sectionQuery = "";
     let searchPhraseQuery = "";
     const sectionName = sectionSelectEl.value;
     const searchPhrase = searchPhraseInputEl.value;
+    const fromDate = getStartSearchDate();
 
     if (!params.page) {
       params.page = 1;
@@ -31,7 +41,7 @@ const mainNewsModule = (function() {
       searchPhraseQuery = `&q="${searchPhrase}"`;
     }
 
-    const url = `${guardianAPIUrl}from-date=2019-09-27&page=${params.page}${sectionQuery}${searchPhraseQuery}&api-key=${guardianAPIKey}`;
+    const url = `${guardianAPIUrl}from-date=${fromDate}&page=${params.page}${sectionQuery}${searchPhraseQuery}&api-key=${guardianAPIKey}`;
 
     return fetch(url)
       .then(res => {return res.json()})

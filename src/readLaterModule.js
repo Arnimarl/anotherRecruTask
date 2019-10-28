@@ -1,12 +1,7 @@
+const readLaterModule = (function() {
+  let readLaterElTemplate;
 
-const readLaterModule = (function(){
-
-  let listOfNewsToRead = [
-    {
-      title: "what to read later?",
-      url: "https://www.google.com"
-    }
-  ];
+  let listOfNewsToRead = [];
 
   function getReadLaterNews() {
     // get z LS
@@ -35,7 +30,10 @@ const readLaterModule = (function(){
     const newsForLater = getReadLaterNews();
 
     const readLaterList = document.querySelector(".readLaterList");
-    const readLaterElTemplate = document.querySelectorAll(".readLaterItem")[0].cloneNode(true);
+    if (!readLaterElTemplate) {
+      readLaterElTemplate = document.querySelectorAll(".readLaterItem")[0].cloneNode(true);
+    }
+
 
     readLaterList.innerHTML = "";
 
