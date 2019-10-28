@@ -23,10 +23,10 @@
       <!-- Filters Section -->
       <section class="container filtersContainer">
         <div class="row">
-          <div class="column searchColumn">
+          <form class="column searchColumn" id="newsContentSearchForm">
             <label for="newsContentSearch">News content search</label>
             <input type="search" placeholder="News content search" id="newsContentSearch" />
-          </div>
+          </form>
           <div class="column">
             <label for="sectionSelect">Section</label>
             <select id="sectionSelect">
@@ -54,22 +54,23 @@
         <div class="row">
           <div class="column column-65">
             <h2 class="newsColumnTitle">News List</h2>
+            <a id="pageReloadLink" class="hide" href="/">Nothing found, click to clear</a>
 
             <ul class="newsList">
               <li class="singleNews">
                 <article class="news">
                   <header>
-                    <h3 class="newsTitle">Sample news title</h3>
+                    <h3 class="newsTitle">...</h3>
                   </header>
                   <section class="newsDetails">
                     <ul>
-                      <li><strong>Section Name:</strong> <span class="newsSectionName">Section</span></li>
-                      <li><strong>Publication Date:</strong> <span class="newsPublicationDate">06.12.2018</span></li>
+                      <li><strong>Section Name:</strong> <span class="newsSectionName">...</span></li>
+                      <li><strong>Publication Date:</strong> <span class="newsPublicationDate">...</span></li>
                     </ul>
                   </section>
                   <section class="newsActions">
                     <a href="https://theguardian.com" class="newsLink button">Full article</a>
-                    <button class="button button-outline">Read Later</button>
+                    <button class="button button-outline readLaterBtn">Read Later</button>
                   </section>
                 </article>
               </li>
@@ -79,11 +80,11 @@
             <h2 class="newsColumnTitle">Read Later</h2>
 
             <ul class="readLaterList">
-              <li>
+              <li class="readLaterItem">
                 <h4 class="readLaterItem-title">Saved news title</h4>
                 <section>
-                  <a href="https://theguardian.com" class="button button-clear">Read</a>
-                  <button class="button button-clear">Remove</button>
+                  <a href="https://theguardian.com" class="button button-clear buttonRead">Read</a>
+                  <button class="button button-clear buttonRmv">Remove</button>
                 </section>
               </li>
             </ul>

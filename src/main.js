@@ -1,17 +1,23 @@
 import './styles/main.css';
+import readLaterModule from './readLaterModule.js';
+
 require("babel-core/register");
 require("babel-polyfill");
 
-const newsModule = (function() {
+const mainNewsModule = (function() {
   const guardianAPIUrl = "https://content.guardianapis.com/search?";
   const guardianAPIKey = "b9d2f34a-7913-411a-ab27-bb1cb526e304";
   const maxNumOfPagesForPaginaton = 50;
   const paginationSelectEl = document.getElementById("activePageSelect");
   const sectionSelectEl = document.getElementById("sectionSelect");
+  const searchPhraseFormEl = document.getElementById("newsContentSearchForm");
+  const searchPhraseInputEl = document.getElementById("newsContentSearch");
 
   function getNews(params) {
     let sectionQuery = "";
+    let searchPhraseQuery = "";
     const sectionName = sectionSelectEl.value;
+    const searchPhrase = searchPhraseInputEl.value;
 
     if (!params.page) {
       params.page = 1;
@@ -21,7 +27,11 @@ const newsModule = (function() {
       sectionQuery = `&section=${sectionName}`;
     }
 
-    const url = `${guardianAPIUrl}from-date=2019-09-27&page=${params.page}${sectionQuery}&api-key=${guardianAPIKey}`;
+    if (searchPhrase.length) {
+      searchPhraseQuery = `&q="${searchPhrase}"`;
+    }
+
+    const url = `${guardianAPIUrl}from-date=2019-09-27&page=${params.page}${sectionQuery}${searchPhraseQuery}&api-key=${guardianAPIKey}`;
 
     return fetch(url)
       .then(res => {return res.json()})
@@ -56,6 +66,8 @@ const newsModule = (function() {
       newsEl.querySelector(".newsSectionName").innerHTML = singleNews.sectionName;
       newsEl.querySelector(".newsPublicationDate").innerHTML = `${pubDate.getDate()}.${pubDate.getMonth()}.${pubDate.getFullYear()}`;
       newsEl.querySelector(".newsLink").setAttribute("href", singleNews.webUrl);
+      newsEl.querySelector(".readLaterBtn").setAttribute("data-title", singleNews.webTitle);
+      newsEl.querySelector(".readLaterBtn").setAttribute("data-url", singleNews.webUrl);
       newsList.appendChild(newsEl);
     });
   }
@@ -63,7 +75,13 @@ const newsModule = (function() {
   async function displayLastNews(params = {}) {
     const news = await getNews(params);
 
+    if (!news.results.length) {
+      document.getElementById("pageReloadLink").classList.remove("hide");
+    }
+
     renderNews(news);
+    readLaterModule.setListeners();
+
     if (params.doNotAdjustPagination) {
       return;
     }
@@ -78,11 +96,17 @@ const newsModule = (function() {
     sectionSelectEl.addEventListener("change", () => {
       displayLastNews();
     });
+
+    searchPhraseFormEl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      displayLastNews();
+    });
   }
   
   function init() {
     displayLastNews();
     initListeners();
+    readLaterModule.init();
   }
 
   return {
@@ -90,4 +114,4 @@ const newsModule = (function() {
   }
 })();
 
-newsModule.init();
+mainNewsModule.init();
