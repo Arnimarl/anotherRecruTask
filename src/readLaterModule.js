@@ -1,27 +1,31 @@
 const readLaterModule = (function() {
   let readLaterElTemplate;
 
-  let listOfNewsToRead = [];
-
   function getReadLaterNews() {
-    // get z LS
+    let listOfNewsToRead = JSON.parse(localStorage.getItem("listOfNewsToRead")) || [];
+
     return listOfNewsToRead;
   }
 
   function removeFromReadLater(index) {
-    // remove z LS
+    let listOfNewsToRead = getReadLaterNews();
+    
     listOfNewsToRead.splice(index, 1);
+    localStorage.setItem("listOfNewsToRead", JSON.stringify(listOfNewsToRead));
 
     renderReadLaterSection();
   }
 
   function addToReadLater(el) {
-    // z data- na btn do LS
+    let listOfNewsToRead = getReadLaterNews();
+
     const news = {
       title: el.dataset.title,
       url: el.dataset.url,
     }
+
     listOfNewsToRead.push(news);
+    localStorage.setItem("listOfNewsToRead", JSON.stringify(listOfNewsToRead));
     
     renderReadLaterSection();
   }
