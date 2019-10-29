@@ -38,7 +38,6 @@ const readLaterModule = (function() {
       readLaterElTemplate = document.querySelectorAll(".readLaterItem")[0].cloneNode(true);
     }
 
-
     readLaterList.innerHTML = "";
 
     newsForLater.forEach((singleNews, index) => {
